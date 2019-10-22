@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travels</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h1>Welcome, {{user.name}}</h1>
+            </div>
+            <div class="col">
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>Your Trip Schedules</h3>
+                <table>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th>Plan</th>
+                    </tr>
+                    {% for destination in user.destinations.all %}
+                    <tr>
+                        <td><a href="travels/destination/{{destination.id}}">{{destination.destination}}</a></td>
+                        <td>{{destination.traveldatefrom}}</td>
+                        <td>{{destination.traveldateto}}</td>
+                        <td>{{destination.description}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>Other User's Travel Plans</h3>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Destination</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th>Do you want to join?</th>
+                    </tr>
+                    {% for destination in destinations %}
+                    {% if user not in destination.users.all %}
+                    <tr>
+                        <td>{{destination.users.first.name}}</td>
+                        <td><a href="travels/destination/{{destination.id}}">{{destination.destination}}</a></td>
+                        <td>{{destination.traveldatefrom}}</td>
+                        <td>{{destination.traveldateto}}</td>
+                        {% if user in destination.users.all %}
+                        <td>Already joined</td>
+                        {% else %}
+                        <td><a href="/jointravelplan/{{destination.id}}">Join</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <a href="/travels/add">Add Travel Plan</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+</body>
+</html>

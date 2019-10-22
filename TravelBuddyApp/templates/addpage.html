@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Plan</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <a href="/travels">Home</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1>Add a trip</h1>
+                {% if messages %}
+                <ul class="messages">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <form action="/add" method="post">
+                    {% csrf_token %}
+                    <h2>Destination:</h2>
+                    <input type="text" name="destination">
+                    <h2>Description:</h2>
+                    <textarea name="description"></textarea>
+                    <h2>Travel date from:</h2>
+                    <input type="date" name="traveldatefrom">
+                    <h2>Travel date To:</h2><br>
+                    <input type="date" name="traveldateto"><br>
+                    <input type="submit" value="add">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

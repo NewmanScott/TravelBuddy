@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Destination</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <a href="/travels">Home</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1>{{destination.destination}}</h1>
+                <h4>Planned by: {{destination.users.first.name}}</h4>
+                <h4>Description: {{destination.description}}</h4>
+                <h4>Travel Date From: {{destination.traveldatefrom}}</h4>
+                <h4>Travel Date To: {{destination.traveldateto}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1>Other users' joining the trip:</h1>
+                {% for user in destination.users.all %}
+                    {% if user != destination.users.first %}
+                    <h4>{{user.name}}</h4>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
